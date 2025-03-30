@@ -1,0 +1,11 @@
+# site folders
+public/
+resources/
+
+.hugo_build.lock
+
+# hugo vendor foler
+_vendor/
+
+# idea folder
+.idea/
