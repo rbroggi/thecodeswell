@@ -11,15 +11,21 @@ menu:
     - name: Blog
       pageRef: /blog
       weight: 1
+    - name: About
+      pageRef: /about
+      weight: 2
+    - name: CV
+      pageRef: /cv
+      weight: 3
     - name: Contact ↗
       url: "mailto:rbroggi.business@gmail.com"
-      weight: 3
-    - name: Search
       weight: 4
+    - name: Search
+      weight: 5
       params:
         type: search
     - name: GitHub
-      weight: 5
+      weight: 6
       url: "https://github.com/rbroggi"
       params:
         icon: github
