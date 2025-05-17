@@ -30,6 +30,10 @@ menu:
       params:
         icon: github
 params:
+  navbar:
+    logo:
+      path: thecodeswell.svg
+      dark: thecodeswell-dark.svg
   footer:
     displayPoweredBy: false
 
