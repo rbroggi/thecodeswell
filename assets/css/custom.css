@@ -1,0 +1,7 @@
+.hx-object-cover {
+  object-fit: cover;
+}
+
+.hx-max-h-64 {
+  max-height: 16rem; /* Adjust as needed */
+}
