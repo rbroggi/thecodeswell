@@ -36,4 +36,7 @@ params:
       dark: thecodeswell-dark.svg
   footer:
     displayPoweredBy: false
+  blog:
+    list:
+      displayTags: true
 

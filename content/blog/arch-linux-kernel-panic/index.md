@@ -20,6 +20,7 @@ categories:
 author: "Rodrigo Broggi" # Or your actual name/handle
 toc: true # Set to false if you don't want a Table of Contents
 draft: false # Set to true if it's not ready to be published
+image: "panic-qr-code.png" # Path to an image for the card
 # You can add other Hextra-specific or Hugo fields here if needed,
 # for example, a path to a featured image:
 # image: "/images/my-kernel-panic-adventure.jpg" 
