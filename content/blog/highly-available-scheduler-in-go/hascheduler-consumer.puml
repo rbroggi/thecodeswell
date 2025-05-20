@@ -1,0 +1,29 @@
+@startuml
+
+skinparam component {
+  BackgroundColor<<scheduler-leader>> PaleGreen
+  BackgroundColor<<elector-leader>> PaleGreen
+}
+
+component "Pod/Process 2" as Pod2 <<candidate leader>> {
+  component "Elector 2" as Elector2 <<elector-leader>> {
+  }
+  component "Scheduler 2 \nTriggers Schedules" as Scheduler2 <<scheduler-leader>> {
+  }
+  Elector2 -> Scheduler2 : is leader? yes
+}
+
+component "Processors" as Processors {
+}
+
+
+queue "Broker" as broker {
+  [Jobs] as jobqueue
+}
+
+
+Scheduler2 -d-> jobqueue : Trigger Jobs
+
+jobqueue -d-> Processors : Process jobs
+
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+
+skinparam component {
+  BackgroundColor<<scheduler>> LightBlue
+  BorderColor<<scheduler>> DarkBlue
+  BackgroundColor<<scheduler-leader>> PaleGreen
+}
+
+component "Pod/Process 1" as Pod1 {
+  component "Scheduler 1\n" as Scheduler1 <<scheduler>> {
+  }
+}
+
+component "Pod/Process 2" as Pod2 {
+  component "Scheduler 2 \n" as Scheduler2 <<scheduler>> {
+  }
+}
+
+component "Pod/Process N" as PodN {
+  component "Scheduler N\n" as SchedulerN <<scheduler>> {
+  }
+}
+
+database "Mongo schedules store" as schedulesstore {
+  [Schedules]
+}
+
+schedulesstore -d-> Scheduler1
+schedulesstore -d-> Scheduler2: Change-stream replication
+schedulesstore -d-> SchedulerN
+
+@enduml

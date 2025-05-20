@@ -1,0 +1,33 @@
+@startuml
+
+skinparam component {
+  BackgroundColor<<elector>> LightBlue
+  BorderColor<<elector>> DarkBlue
+  BackgroundColor<<elector-leader>> PaleGreen
+}
+
+component "Pod/Process 1" as Pod1 <<candidate>> {
+  component "Elector 1" as Elector1 <<elector>> {
+  }
+}
+
+component "Pod/Process 2" as Pod2 <<candidate leader>> {
+  component "Elector 2" as Elector2 <<elector-leader>> {
+  }
+}
+
+component "Pod/Process N" as PodN <<candidate>> {
+  component "Elector N" as ElectorN <<elector>> {
+  }
+}
+
+database "lease store" as leasestore {
+  [Lease Object] as Lease
+}
+
+Elector1 <-d-> leasestore
+Elector2 <-d-> leasestore : Create/Update/Get Lease
+ElectorN <-d-> leasestore
+
+
+@enduml

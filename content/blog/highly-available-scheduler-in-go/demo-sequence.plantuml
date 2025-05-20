@@ -1,0 +1,37 @@
+@startuml
+
+actor User
+participant "HTTP Server" as HTTPServer
+database "Mongo DB" as MongoDB
+
+box "hascheduler deployment" #LightBlue
+participant "Pod 1" as Pod1
+participant "Pod 2" as Pod2
+participant "Pod N" as PodN
+end box
+
+activate Pod2 #PaleGreen
+note over Pod2: Pod 2 becomes leader
+User -> HTTPServer : Creates Schedule
+activate HTTPServer
+HTTPServer -> MongoDB : Creates Schedule
+activate MongoDB
+MongoDB --> HTTPServer : Acknowledges Creation
+deactivate MongoDB
+HTTPServer --> User : Returns Created Schedule
+deactivate HTTPServer
+
+MongoDB --> Pod1 : Change Stream: New Schedule
+MongoDB --> PodN : Change Stream: New Schedule
+MongoDB --> Pod2 : Change Stream: New Schedule
+
+Pod2 --> Pod2 : Job Execution\n(logs can be seen)
+User -> Pod2 !! : Kills Leader Pod (Pod 2)
+deactivate Pod2
+
+Pod1 --> Pod1 : Takeover lease\nand leadership
+activate Pod1 #PaleGreen
+note over Pod1: Pod 1 becomes leader\nand starts running jobs
+Pod1 --> Pod1 : Job Execution\n(logs can be seen)
+
+@enduml
