@@ -45,7 +45,9 @@ kubectl create configmap k6-load-test-script \
 * `--from-file`: Specifies the local script to be included. The filename (your-test-script.js) will become the key in the ConfigMap's data.
 * `--dry-run=client -o yaml`: Generates the YAML output without applying it to the cluster.
 
-You can now apply this manifest: kubectl apply \-f k6-configmap.yaml
+You can now apply this manifest: `kubectl apply -f k6-configmap.yaml`
+
+If you use [Kustomize][kustomize], you can also add the script to your `kustomization.yaml` under [configMapGenerator][kustomize-configmap-generator] to automate this step.
 
 ## **The Job Manifest Explained**
 
@@ -72,8 +74,6 @@ spec:
             # a. Prometheus Remote Write Configuration
             - name: K6_PROMETHEUS_RW_SERVER_URL
               value: "http://your-prometheus-endpoint/api/v1/write"
-            - name: K6_PROMETHEUS_RW_TREND_STATS
-              value: "p(90),p(95),p(99),max"
             # b. Dynamic Test ID Configuration
             - name: K6_TESTID_PREFIX
               value: "mytest-label"
@@ -113,6 +113,7 @@ To distinguish between different runs of the same test, a unique testid is gener
 
 * `K6_TESTID_PREFIX`: An environment variable you set to a fixed string (e.g., `mytest-label`) to identify the test campaign.
 * `K6_POD_NAME`: This variable is populated using the Kubernetes **Downward API**. valueFrom.fieldRef injects the pod's metadata (in this case, its name) into an environment variable. Since each pod in a Job has a unique name (e.g., `k6-load-test-job-abcde`), this provides the dynamic part of our ID.
+   Not necessarily we want to use a high-granularity identifier like the pod name as this is generally not a good practice for prometheus metrics.
 * *k6 Script Logic**: The k6 script is responsible for reading these two environment variables and combining them to form the final testid tag.
 
 ### **Injecting Secrets**
@@ -216,3 +217,5 @@ Use this workflow if you don't have the original manifest files and need to patc
   ```
   
 [k6-dashboard-image]: k6-dashboard-image.png
+[kustomize]: https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/
+[kustomize-configmap-generator]: https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/#configmapgenerator
