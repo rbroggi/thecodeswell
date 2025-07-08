@@ -1,6 +1,6 @@
 ---
 title: "k6 Deployment on k8s"
-date: 2025-05-17
+date: 2025-07-08
 description: "A humorous and detailed account of diagnosing and fixing a Linux kernel panic triggered by a full /boot partition. Follow the journey through LUKS challenges, partition management, and the tools like Ventoy and BorgBackup that saved the day on an Arch Linux system."
 tags:
   - "kubernetes"
